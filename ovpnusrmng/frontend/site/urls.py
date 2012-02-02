@@ -23,23 +23,8 @@ import settings
 from siteviews import homepage
 from login import login, register
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
-
 urlpatterns = patterns('',
     (r'^$', homepage),
     (r'^login$', login),
     (r'^register$', register),
-
-
-    # Examples:
-    # url(r'^$', 'solution.views.home', name='home'),
-    # url(r'^solution/', include('solution.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
 )

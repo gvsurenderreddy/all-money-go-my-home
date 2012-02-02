@@ -56,7 +56,7 @@ def register(request):
 	    request.session['Username'] = u.Username
 	    return HttpResponseRedirect('/user')
 	else:
-	    errmsg = "Invalid Info"
+	    errmsg = "Some fields should be corrected."
     c=joinbase({
 	    'form': form,
 	    'errmsg': errmsg,

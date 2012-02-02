@@ -20,7 +20,6 @@
 from django.conf.urls.defaults import patterns, include, url
 import settings
 
-from views import current_datetime
 import frontend.site.urls
 
 # Uncomment the next two lines to enable the admin:
@@ -32,6 +31,7 @@ urlpatterns = patterns('',
 
 
     (r'', include('frontend.site.urls')),
+    (r'user/', include('frontend.user.urls')),
     # Examples:
     # url(r'^$', 'solution.views.home', name='home'),
     # url(r'^solution/', include('solution.foo.urls')),
