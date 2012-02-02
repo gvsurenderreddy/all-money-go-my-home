@@ -17,22 +17,19 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django import forms
-from django.forms import ModelForm
+from django.conf.urls.defaults import patterns, include, url
 
-from backend.usercontrol.models import User
+from login import login, logout
+from status import status
+from users import users
 
-class LoginForm(ModelForm):
-    class Meta:
-	model = User
-	fields = ('Username', 'Password')
-   
-    Password = forms.CharField(widget=forms.PasswordInput)
-
-
-class RegisterForm(ModelForm):
-    class Meta:
-	model = User
-	fields = ('Username', 'Password', 'Email')
-
-    Password = forms.CharField(widget=forms.PasswordInput)
+urlpatterns = patterns('',
+    (r'^$', login),
+    (r'^login$', login),
+    
+    (r'^status$', status),
+    
+    (r'^users$', users),
+    
+    (r'^.*$', logout),
+)

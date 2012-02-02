@@ -22,17 +22,17 @@ from django.forms import ModelForm
 
 from backend.usercontrol.models import User
 
-class LoginForm(ModelForm):
-    class Meta:
-	model = User
-	fields = ('Username', 'Password')
-   
+class LoginForm(forms.Form):
     Password = forms.CharField(widget=forms.PasswordInput)
 
+class SearchUserForm(forms.Form):
+    AnyField = forms.CharField()
 
-class RegisterForm(ModelForm):
+class UserAddForm(ModelForm):
     class Meta:
 	model = User
 	fields = ('Username', 'Password', 'Email')
-
-    Password = forms.CharField(widget=forms.PasswordInput)
+	
+class UserForm(ModelForm):
+    class Meta:
+	model = User

@@ -17,22 +17,20 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django import forms
-from django.forms import ModelForm
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template import loader,Context, RequestContext
 
-from backend.usercontrol.models import User
+from forms import SearchUserForm, UserAddForm, UserForm
 
-class LoginForm(ModelForm):
-    class Meta:
-	model = User
-	fields = ('Username', 'Password')
-   
-    Password = forms.CharField(widget=forms.PasswordInput)
-
-
-class RegisterForm(ModelForm):
-    class Meta:
-	model = User
-	fields = ('Username', 'Password', 'Email')
-
-    Password = forms.CharField(widget=forms.PasswordInput)
+def users(request):
+    searchUserForm = SearchUserForm()
+    userAddForm = UserAddForm()
+    
+    return render_to_response("admin-user.html",
+	{
+	    'pageName': 'users',
+	    'userSearchForm': searchUserForm,
+	    'userAddForm': userAddForm,
+	},
+	context_instance=RequestContext(request))

@@ -27,11 +27,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve', 		{'document_root': settings.STATIC_ROOT}),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.STATIC_ROOT}),
 
 
-    (r'', include('frontend.site.urls')),
-    (r'user/', include('frontend.user.urls')),
+    (r'^', include('frontend.site.urls')),
+    (r'^user/', include('frontend.user.urls')),
+    (r'^manage/', include('frontend.admin.urls')),
     # Examples:
     # url(r'^$', 'solution.views.home', name='home'),
     # url(r'^solution/', include('solution.foo.urls')),

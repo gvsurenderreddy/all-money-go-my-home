@@ -1,0 +1,26 @@
+{% extends "site.html" %}
+{% block content %}
+    <div class="container">
+
+	<div class="row">
+	    <div class="span4 offset4 ">
+		<h2>Administrative Log In</h2>
+		<form action="/manage/login" method="post" class="well">
+		    {% csrf_token %}
+		
+		    {% if errmsg %}
+			<div class="alert alert-error">
+			    <strong>{{ errmsg }}</strong>
+			</div>
+		    {% endif %}
+		    
+		    {{ form.as_p }}
+		    <button type="submit" class="btn btn-primary">Log in</button>
+		</form>
+	    </div>
+	</div>
+	
+    {% include "site-footer.html" %}
+
+    </div>
+{% endblock %}

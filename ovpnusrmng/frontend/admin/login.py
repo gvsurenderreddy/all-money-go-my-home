@@ -17,22 +17,31 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django import forms
-from django.forms import ModelForm
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template import loader,Context, RequestContext
 
-from backend.usercontrol.models import User
+from forms import LoginForm
 
-class LoginForm(ModelForm):
-    class Meta:
-	model = User
-	fields = ('Username', 'Password')
-   
-    Password = forms.CharField(widget=forms.PasswordInput)
+from settings import ADMINPASSWORD
 
 
-class RegisterForm(ModelForm):
-    class Meta:
-	model = User
-	fields = ('Username', 'Password', 'Email')
+def login(request):
+    errmsg=""
+    form = LoginForm()
+    if request.method == 'POST': 
+	form = LoginForm(request.POST)
+	if ADMINPASSWORD==form['Password'].value():
+	    request.session['Admin'] = True
+	    return HttpResponseRedirect('/manage/status')
+	else:
+	    return HttpResponseRedirect('http://www.people.com.cn/')
+    return render_to_response("admin-login.html",
+	{
+	    'form': form,
+	},
+	context_instance=RequestContext(request))
 
-    Password = forms.CharField(widget=forms.PasswordInput)
+def logout(request):
+    request.session.clear()
+    return HttpResponseRedirect('/')
