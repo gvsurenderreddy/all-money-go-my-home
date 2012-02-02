@@ -11,3 +11,11 @@ def homepage(request):
 	    'SITEMOTTO': SITEMOTTO,
 	})
     return HttpResponse(t.render(c))
+
+def sitepage(template, context):
+    t=loader.get_template("site-homepage.html")
+    c=Context({
+	    'SITENAME': SITENAME,
+	    'SITEMOTTO': SITEMOTTO,
+	})
+    return HttpResponse(t.render(c))

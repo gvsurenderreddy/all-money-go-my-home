@@ -165,5 +165,7 @@ LOGGING = {
     }
 }
 
+ADMINPASSWORD="123123"
+
 SITENAME="FBX VPN"
 SITEMOTTO="Very Reliable!"

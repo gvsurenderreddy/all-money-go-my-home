@@ -2,7 +2,7 @@
 BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x10\x00s\x00o\x00l\x00u\x00t\x00i\x00o\x00n)
 
 [Filters]
-Excludes=*.swp,*.pyc,*/.*,*/*~
+Excludes=*.pyo,*.swp,*.pyc,*/.*,*/*~
 
 [MakeBuilder]
 Default Make Environment Profile=0

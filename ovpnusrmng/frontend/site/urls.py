@@ -21,6 +21,7 @@ from django.conf.urls.defaults import patterns, include, url
 import settings
 
 from siteviews import homepage
+from login import login, register
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -28,6 +29,8 @@ from siteviews import homepage
 
 urlpatterns = patterns('',
     (r'^$', homepage),
+    (r'^login$', login),
+    (r'^register$', register),
 
 
     # Examples:
