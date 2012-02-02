@@ -21,7 +21,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader,Context, RequestContext
 
-from backend.usercontrol.models import User
+from backend.usercontrol.login import try_login
 
 from forms import LoginForm, RegisterForm
 from base import joinbase
@@ -32,12 +32,12 @@ def login(request):
     form = LoginForm()
     if request.method == 'POST': 
 	form = LoginForm(request.POST)
-	try:
-	    U=User.objects.get(Username=form['Username'].value(), Password=form['Password'].value())
-	    request.session['Username'] = u.Username
+	if try_login(Username=form['Username'].value(), Password=form['Password'].value()):
+	    request.session['Username'] = form['Username'].value()
 	    return HttpResponseRedirect('/user')
-	except User.DoesNotExist:
+	else:
 	    errmsg = "Wrong login or password."
+	    form = LoginForm()
     c=joinbase({
 	    'form': form,
 	    'errmsg': errmsg,
@@ -64,3 +64,8 @@ def register(request):
     return render_to_response("site-register.html",
 	c,
 	context_instance=RequestContext(request))
+	
+
+def logout(request):
+    request.session.clear()
+    return HttpResponseRedirect('/')

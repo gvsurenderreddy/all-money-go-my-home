@@ -17,15 +17,13 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django.conf.urls.defaults import patterns, include, url
-import settings
+from settings import SITENAME
 
-from siteviews import homepage
-from login import login, register, logout
+sitebase={
+    'SITENAME': SITENAME,
+}
 
-urlpatterns = patterns('',
-    (r'^$', homepage),
-    (r'^login$', login),
-    (r'^register$', register),
-    (r'^logout$', logout),
-)
+def joinbase(context):
+    ret=context.copy()
+    ret.update(sitebase)
+    return ret

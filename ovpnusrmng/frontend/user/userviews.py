@@ -17,15 +17,12 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django.conf.urls.defaults import patterns, include, url
-import settings
+from django.shortcuts import render_to_response
+from django.http import HttpResponse
+from django.template import loader,Context
 
-from siteviews import homepage
-from login import login, register, logout
+from base import joinbase
 
-urlpatterns = patterns('',
-    (r'^$', homepage),
-    (r'^login$', login),
-    (r'^register$', register),
-    (r'^logout$', logout),
-)
+def userstatus(request):
+    c=joinbase({})
+    return render_to_response("user-status.html",c)

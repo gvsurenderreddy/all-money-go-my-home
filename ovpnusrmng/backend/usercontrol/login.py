@@ -17,15 +17,11 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django.conf.urls.defaults import patterns, include, url
-import settings
+from models import User
 
-from siteviews import homepage
-from login import login, register, logout
-
-urlpatterns = patterns('',
-    (r'^$', homepage),
-    (r'^login$', login),
-    (r'^register$', register),
-    (r'^logout$', logout),
-)
+def try_login(Username, Password):
+    try:
+	U=User.objects.get(Username = Username, Password = Password)
+	return True
+    except User.DoesNotExist:
+	return False

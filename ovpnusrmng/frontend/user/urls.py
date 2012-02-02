@@ -20,12 +20,8 @@
 from django.conf.urls.defaults import patterns, include, url
 import settings
 
-from siteviews import homepage
-from login import login, register, logout
+from userviews import userstatus
 
 urlpatterns = patterns('',
-    (r'^$', homepage),
-    (r'^login$', login),
-    (r'^register$', register),
-    (r'^logout$', logout),
+    (r'^$', userstatus),
 )

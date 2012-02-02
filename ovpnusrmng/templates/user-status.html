@@ -1,0 +1,65 @@
+{% extends "user.html" %}
+{% block content %}
+    <div class="well">
+	<h1>账户状态</h1>
+	
+	<!--<div class="row">
+	    <div class="span5 offset1"> -->
+		<table class="table table-bordered table-striped">
+		    <tr>
+			<td class="pagination-centered">帐号</td>
+			<td>multiple1902</td>
+		    </tr>
+		    <tr>
+			<td>套餐</td>
+			<td>无限流量 (每月0元)</td>
+		    </tr>
+		    <tr>
+			<td>余额</td>
+			<td>10元</td>
+		    </tr>
+		    <tr>
+			<td>流量</td>
+			<td>20G/1000G</td>
+		    </tr>
+		    <tr>
+			<td>过期时间</td>
+			<td>Feb 2, 2012</td>
+		    </tr>
+		</table>
+	    <!--</div>
+	</div>-->
+	
+	<hr>
+	<h2>使用记录</h2>
+	
+		<table class="table table-bordered table-striped table-condensed">
+		    <thead>
+			<tr>
+			    <th>连接日期</th>
+			    <th>持续时间</th>
+			    <th>流量</th>
+			    <th>客户端IP</th>
+			    <th>连接方式</th>
+			</tr>
+		    </thead>
+		    <tbody>
+			<tr>
+			    <td>20120223</td>
+			    <td>3小时26分钟</td>
+			    <td>200MB</td>
+			    <td>1.2.3.4</td>
+			    <td>OpenVPN</td>
+			</tr>
+		    </tbody>
+		</table>
+	    <a href="/user/log" class="btn btn-info">查看更多</a>
+	
+	<hr>
+	<h2>更换套餐</h2>
+	
+	<hr>
+	<h2>下载配置文件</h2>
+	
+    </div>
+{% endblock %}
