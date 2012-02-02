@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+# -*- coding: utf8 -*-
 # Copyright 2012 by multiple1902 <multiple1902@gmail.com>
 # http://code.google.com/p/all-money-go-my-home/
 #
