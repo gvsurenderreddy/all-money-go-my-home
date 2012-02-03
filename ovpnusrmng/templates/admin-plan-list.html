@@ -1,0 +1,30 @@
+{% extends "admin.html" %}
+{% block content %}
+    <div class="well">
+        <h1>方案列表</h1>
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>方案名</th>
+                    <th>流量限制</th>
+                    <th>连接数</th>
+                    <th>隐藏</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for plan in plans %}
+                <tr>
+                    <td>{{ plan.Title }}</td>
+                    <td>{{ plan.Bandwidth|filesizeformat }}</td>
+                    <td>{{ plan.Connection }}</td>
+                    <td>{{ plan.Hidden }}</td>
+                    <td><a href="plans-edit-id-{{ plan.id }}" class="btn">编辑</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="plans-add" class="btn">添加</a>
+    </div>
+{% endblock %}

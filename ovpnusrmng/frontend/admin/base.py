@@ -16,17 +16,3 @@
 # along with this program; if not, write to the
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
-from django.template import loader,Context, RequestContext
-
-from login import isAdmin, illegalAccess
-
-def status(request):
-    if not isAdmin(request): return illegalAccess()
-    return render_to_response("admin-status.html",
-        {
-            'pageName': 'status'
-        },
-        context_instance=RequestContext(request))

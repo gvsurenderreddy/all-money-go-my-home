@@ -35,7 +35,7 @@ def login(request):
 	    request.session['Admin'] = True
 	    return HttpResponseRedirect('/manage/status')
 	else:
-	    return HttpResponseRedirect('http://www.people.com.cn/')
+	    return illegalAccess
     return render_to_response("admin-login.html",
 	{
 	    'form': form,
@@ -45,3 +45,12 @@ def login(request):
 def logout(request):
     request.session.clear()
     return HttpResponseRedirect('/')
+    
+def isAdmin(request):
+    try:
+	return request.session['Admin']
+    except:
+	return False
+	
+def illegalAccess():
+    return HttpResponseRedirect('http://www.people.com.cn/')

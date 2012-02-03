@@ -168,4 +168,4 @@ LOGGING = {
 ADMINPASSWORD="123123"
 
 SITENAME="FBX VPN"
-SITEMOTTO="Very Reliable!"
+SITEMOTTO='''<h2>不惜牺牲自由以图苟安的人，既不配享受自由，也不配获得安全。 —— 富兰克林</h2>'''

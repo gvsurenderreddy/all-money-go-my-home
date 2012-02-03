@@ -1,0 +1,45 @@
+{% extends "admin.html" %}
+{% block content %}
+    <div class="well">
+        <h1>连接日志列表</h1>
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>用户</th>
+                    <th>服务</th>
+                    <th>连接时间 / 持续时间</th>
+                    <th>IP</th>
+                    <th>流量</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for record in records.object_list %}
+                <tr>
+                    <td>{{ record.User }}</td>
+                    <td>{{ record.Service }}</td>
+                    <td>{{ record.ConnTime }} / {{ record.Duration }}</td>
+                    <td>{{ record.IP }}</td>
+                    <td>{{ record.BandwidthUp|filesizeformat }}+{{ record.BandwidthDown|filesizeformat }}={{ record.Bandwidth|filesizeformat }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="btn-group pull-right">
+                    {% if records.has_previous %}
+                        <a class="btn" href="logs-page-{{ logs.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="btn">
+                        {{ records.number }} of {{ records.paginator.num_pages }}
+                    </span>
+
+                    {% if records.has_next %}
+                        <a class="btn" href="logs-page-{{ logs.next_page_number }}">next</a>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

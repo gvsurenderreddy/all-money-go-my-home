@@ -21,7 +21,9 @@ from django.conf.urls.defaults import patterns, include, url
 
 from login import login, logout
 from status import status
-from users import users
+from users import users_list, users_add, users_edit
+from plans import plans_list, plans_add, plans_edit
+from logs import logs_list
 
 urlpatterns = patterns('',
     (r'^$', login),
@@ -29,7 +31,15 @@ urlpatterns = patterns('',
     
     (r'^status$', status),
     
-    (r'^users$', users),
+    (r'^users$', users_list),
+    (r'^users-add$', users_add),
+    (r'^users-page-(\d+)$', users_list),
+    (r'^users-edit-id-(\d+)$', users_edit),
     
-    (r'^.*$', logout),
+    (r'^plans$', plans_list),
+    (r'^plans-add$', plans_add),
+    (r'^plans-edit-id-(\d+)', plans_edit),
+    
+    (r'^logs$', logs_list),
+    #(r'^.*$', logout),
 )

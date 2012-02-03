@@ -31,40 +31,40 @@ def login(request):
     errmsg=""
     form = LoginForm()
     if request.method == 'POST': 
-	form = LoginForm(request.POST)
-	if try_login(Username=form['Username'].value(), Password=form['Password'].value()):
-	    request.session['Username'] = form['Username'].value()
-	    return HttpResponseRedirect('/user')
-	else:
-	    errmsg = "Wrong login or password."
-	    form = LoginForm()
+        form = LoginForm(request.POST)
+        if try_login(Username=form['Username'].value(), Password=form['Password'].value()):
+            request.session['Username'] = form['Username'].value()
+            return HttpResponseRedirect('/user')
+        else:
+            errmsg = "Wrong login or password."
+            form = LoginForm()
     c=joinbase({
-	    'form': form,
-	    'errmsg': errmsg,
+            'form': form,
+            'errmsg': errmsg,
     })
     return render_to_response("site-login.html",
-	c,
-	context_instance=RequestContext(request))
+        c,
+        context_instance=RequestContext(request))
 
 def register(request):
     errmsg=""
     form = RegisterForm()
     if request.method == 'POST': 
-	form = RegisterForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
-	    u=form.save()
-	    request.session['Username'] = u.Username
-	    return HttpResponseRedirect('/user')
-	else:
-	    errmsg = "Some fields should be corrected."
+            u=form.save()
+            request.session['Username'] = u.Username
+            return HttpResponseRedirect('/user')
+        else:
+            errmsg = "Some fields should be corrected."
     c=joinbase({
-	    'form': form,
-	    'errmsg': errmsg,
+            'form': form,
+            'errmsg': errmsg,
     })
     return render_to_response("site-register.html",
-	c,
-	context_instance=RequestContext(request))
-	
+        c,
+        context_instance=RequestContext(request))
+        
 
 def logout(request):
     request.session.clear()

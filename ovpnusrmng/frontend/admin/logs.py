@@ -22,39 +22,29 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader,Context, RequestContext
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from backend.usercontrol.models import User
+from backend.usercontrol.models import Record
 
 from login import isAdmin, illegalAccess
-from forms import SearchUserForm, UserAddForm, UserForm
 
-from settings import User_Pagesize
+from settings import Log_Pagesize
     
-def users_list(request, page="1"):
+def logs_list(request, page="1"):
     if not isAdmin(request): return illegalAccess()
     
-    if request.POST.get("AnyField", None):
-        q = User.objects.filter(Username__contains = request.POST.get("AnyField", None)) \
-          | User.objects.filter(Comment__contains  = request.POST.get("AnyField", None)) \
-          | User.objects.filter(Email__contains    = request.POST.get("AnyField", None)) \
-          | User.objects.filter(Contact__contains  = request.POST.get("AnyField", None))
-    else:
-        q = User.objects.all()
+    q = Record.objects.all().order_by("-id")
         
-    lst = Paginator(q, User_Pagesize)
+    lst = Paginator(q, Log_Pagesize)
     try:
-        users = lst.page(page)
+        logs = lst.page(page)
     except PageNotAnInteger:
-        users = lst.page(1)
+        logs = lst.page(1)
     except EmptyPage:
-        users = lst.page(lst.num_pages)
+        logs = lst.page(lst.num_pages)
     
-    searchUserForm = SearchUserForm()
-    
-    return render_to_response("admin-user-list.html",
+    return render_to_response("admin-logs-list.html",
         {
-            'pageName': 'users',
-            'users': users,
-            'userSearchForm': searchUserForm,
+            'pageName': 'logs',
+            'records': logs,
         },
         context_instance=RequestContext(request))
 

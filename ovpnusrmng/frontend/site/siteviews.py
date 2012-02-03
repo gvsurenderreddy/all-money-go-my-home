@@ -25,15 +25,15 @@ from settings import SITENAME, SITEMOTTO
 def homepage(request):
     t=loader.get_template("site-homepage.html")
     c=Context({
-	    'SITENAME': SITENAME,
-	    'SITEMOTTO': SITEMOTTO,
-	})
+            'SITENAME': SITENAME,
+            'SITEMOTTO': SITEMOTTO,
+        })
     return HttpResponse(t.render(c))
 
 def sitepage(template, context):
     t=loader.get_template("site-homepage.html")
     c=Context({
-	    'SITENAME': SITENAME,
-	    'SITEMOTTO': SITEMOTTO,
-	})
+            'SITENAME': SITENAME,
+            'SITEMOTTO': SITEMOTTO,
+        })
     return HttpResponse(t.render(c))

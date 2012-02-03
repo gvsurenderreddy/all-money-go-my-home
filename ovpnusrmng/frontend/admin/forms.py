@@ -20,7 +20,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from backend.usercontrol.models import User
+from backend.usercontrol.models import User, Plan
 
 class LoginForm(forms.Form):
     Password = forms.CharField(widget=forms.PasswordInput)
@@ -35,4 +35,9 @@ class UserAddForm(ModelForm):
 	
 class UserForm(ModelForm):
     class Meta:
-	model = User
+        model = User
+        
+class PlanForm(ModelForm):
+    class Meta:
+        model = Plan
+        

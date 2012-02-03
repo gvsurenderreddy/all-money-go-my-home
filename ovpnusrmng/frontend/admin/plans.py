@@ -22,82 +22,63 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader,Context, RequestContext
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from backend.usercontrol.models import User
+from backend.usercontrol.models import Plan
 
 from login import isAdmin, illegalAccess
-from forms import SearchUserForm, UserAddForm, UserForm
+from forms import PlanForm
 
-from settings import User_Pagesize
-    
-def users_list(request, page="1"):
+def plans_list(request):
     if not isAdmin(request): return illegalAccess()
     
-    if request.POST.get("AnyField", None):
-        q = User.objects.filter(Username__contains = request.POST.get("AnyField", None)) \
-          | User.objects.filter(Comment__contains  = request.POST.get("AnyField", None)) \
-          | User.objects.filter(Email__contains    = request.POST.get("AnyField", None)) \
-          | User.objects.filter(Contact__contains  = request.POST.get("AnyField", None))
-    else:
-        q = User.objects.all()
-        
-    lst = Paginator(q, User_Pagesize)
-    try:
-        users = lst.page(page)
-    except PageNotAnInteger:
-        users = lst.page(1)
-    except EmptyPage:
-        users = lst.page(lst.num_pages)
+    plans = Plan.objects.all()
     
-    searchUserForm = SearchUserForm()
-    
-    return render_to_response("admin-user-list.html",
+    return render_to_response("admin-plan-list.html",
         {
-            'pageName': 'users',
-            'users': users,
-            'userSearchForm': searchUserForm,
+            'pageName': 'plans',
+            'plans': plans,
         },
         context_instance=RequestContext(request))
 
-def users_edit(request, id="0"):
+def plans_edit(request, id="0"):
     if not isAdmin(request): return illegalAccess()
     
     try:
-        user = User.objects.get(id = id)
+        plan = Plan.objects.get(id = id)
     except:
         return illegalAccess()
         
     save_success = False
     if request.method == 'POST': 
-        form = UserForm(request.POST, instance = user)
+        form = PlanForm(request.POST, instance = plan)
         if form.is_valid():
             u=form.save()
             save_success = True
     else:
-        form = UserForm(instance = user)
-    return render_to_response("admin-user-edit.html",
+        form = PlanForm(instance = plan)
+    return render_to_response("admin-plan-edit.html",
         {
-            'pageName': 'users',
-            'user': user,
+            'pageName': 'plans',
+            'plan': plan,
             'form': form,
             'save_success': save_success,
         },
         context_instance=RequestContext(request))
 
-def users_add(request):
+def plans_add(request):
     if not isAdmin(request): return illegalAccess()
     
     save_success = False
     if request.method == 'POST': 
-        form = UserForm(request.POST)
+        form = PlanForm(request.POST)
         if form.is_valid():
             u=form.save()
             save_success = True
-            return HttpResponseRedirect('users')
+            return HttpResponseRedirect('plans')
     else:
-        form = UserForm()
-    return render_to_response("admin-user-edit.html",
+        form = PlanForm()
+    return render_to_response("admin-plan-edit.html",
         {
-            'pageName': 'users',
+            'pageName': 'plans',
             'form': form,
             'save_success': save_success,
         },

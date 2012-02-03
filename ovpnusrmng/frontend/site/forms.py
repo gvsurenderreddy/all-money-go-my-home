@@ -24,15 +24,15 @@ from backend.usercontrol.models import User
 
 class LoginForm(ModelForm):
     class Meta:
-	model = User
-	fields = ('Username', 'Password')
+        model = User
+        fields = ('Username', 'Password')
    
     Password = forms.CharField(widget=forms.PasswordInput)
 
 
 class RegisterForm(ModelForm):
     class Meta:
-	model = User
-	fields = ('Username', 'Password', 'Email')
+        model = User
+        fields = ('Username', 'Password', 'Email')
 
     Password = forms.CharField(widget=forms.PasswordInput)
