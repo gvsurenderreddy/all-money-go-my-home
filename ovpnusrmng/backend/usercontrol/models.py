@@ -38,7 +38,7 @@ class User(models.Model):
         
     def Resource(self):                                 # in bytes
         ax = 0
-        rs = Records.objects.filter(User = self) # TODO: Only this accounting period (month)
+        rs = Record.objects.filter(User = self) # TODO: Only this accounting period (month)
         for itemx in rs:
             ax += itemx.Bandwidth()
         return ax
