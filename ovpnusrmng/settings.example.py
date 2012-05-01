@@ -169,3 +169,10 @@ ADMINPASSWORD="123123"
 
 SITENAME="FBX VPN"
 SITEMOTTO='''<h2>不惜牺牲自由以图苟安的人，既不配享受自由，也不配获得安全。 —— 富兰克林</h2>'''
+
+User_Pagesize = 20
+Log_Pagesize = 20
+
+OPENVPN_MANAGEMENT = {  # tuple: [IP, Port, Password]
+        'VPN' : ['localhost', 40000, "abcdef"]
+        }

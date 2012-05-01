@@ -43,7 +43,6 @@ def status(request):
         TodayBandwidth = Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
     except TypeError:
         TodayBandwidth = 0
-    TodayBandwidth=0
 
     try:
         MonthBandwidth = Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
