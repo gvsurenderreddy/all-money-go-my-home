@@ -28,14 +28,18 @@ def ovpn_connect():
     env_username = os.environ.get("common_name")
     if not env_username:
         env_username = os.environ.get("username")
-    env_password = os.environ.get("password")
     env_remote_ip = os.environ.get("trusted_ip")
+    connect(env_username, "VPN", env_remote_ip)
 
-    if try_login_openvpn(env_username, env_password):
-        connect(env_username, "VPN", env_remote_ip)
-        return 0
-    else:
-        return 1
+def ovpn_disconnect():
+    ''' edits an entry '''
+    env_username = os.environ.get("common_name")
+    if not env_username:
+        env_username = os.environ.get("username")
+    env_remote_ip = os.environ.get("trusted_ip")
+    env_bytes_recv = os.environ.get("bytes_received")
+    env_bytes_sent = os.environ.get("bytes_sent")
+    disconnect(env_username, "VPN", env_remote_ip, env_bytes_sent, env_bytes_recv)
 
 def ovpn_verify():
     ''' verification only '''
