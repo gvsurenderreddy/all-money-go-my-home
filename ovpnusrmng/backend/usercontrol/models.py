@@ -42,7 +42,10 @@ class User(models.Model):
     def Resource(self):                                 # in bytes
         now = datetime.datetime.now()
         MonthStart = datetime.date(now.year, now.month, 1)
-        return Record.objects.filter(User = self, ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(User = self, ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
+        try:
+            return Record.objects.filter(User = self, ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(User = self, ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
+        except TypeError:
+            return -1
 
     def CurrConnections(self):
         rs = Record.objects.filter(User = self, DisconnTime__isnull = True)
