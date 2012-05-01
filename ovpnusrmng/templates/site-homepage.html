@@ -1,0 +1,15 @@
+{% extends "site.html" %}
+{% block content %}
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>{{ SITEMOTTO|safe }}</h1>
+	<hr>
+        <p><a href="/register" class="btn btn-primary btn-large">Sign up &raquo;</a></p>
+      </div>
+
+    {% include "site-footer.html" %}
+
+    </div>
+{% endblock %}
