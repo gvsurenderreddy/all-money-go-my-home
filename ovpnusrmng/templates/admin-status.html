@@ -1,0 +1,49 @@
+{% extends "admin.html" %}
+{% block content %}
+    <div class="well">
+	<h1>节点运行状态</h1>
+	
+		<table class="table table-bordered table-striped">
+		    <tr>
+			<td>在线用户</td>
+			<td>22</td>
+		    </tr>
+		    <tr>
+			<td>今日流量</td>
+			<td>22.3G</td>
+		    </tr>
+		    <tr>
+			<td>本月流量</td>
+			<td>474G</td>
+		    </tr>
+		</table>
+	
+	<hr>
+	<h2>在线用户</h2>
+	
+		<table class="table table-bordered table-striped table-condensed">
+		    <thead>
+			<tr>
+			    <th>连接时间</th>
+			    <th>持续时间</th>
+			    <th>流量</th>
+			    <th>客户端IP</th>
+			    <th>连接方式</th>
+			    <th>帐号</th>
+			</tr>
+		    </thead>
+            <tbody>
+            {% for record in records %}
+			<tr>
+                <td>{{ record.ConnTime }}</td>
+                <td>{{ record.Duration }}</td>
+                <td>{{ record.Bandwidth }}</td>
+                <td>{{ record.IP }}</td>
+                <td>{{ record.Service }}</td>
+                <td><a href="userinfo?id={{ record.User.Username }}">{{ record.User.Username }}</a></td>
+            </tr>
+            {% endfor %}
+		    </tbody>
+		</table>
+    </div>
+{% endblock %}

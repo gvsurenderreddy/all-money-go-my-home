@@ -1,0 +1,23 @@
+{% extends "admin.html" %}
+{% block content %}
+    <div class="well">
+        <h1>编辑方案{{ plan.Title }}</h1>
+        
+        <div class="row">
+            <div class="span3 offset4">
+                {% if save_success %}
+                <div class="alert alert-success">
+                    <p>200 <a href="plans">Return.</a></p>
+                </div>
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    {{ form.as_p }}
+                    
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

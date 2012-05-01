@@ -1,0 +1,19 @@
+body {
+  font-size: 18px;
+  line-height: 24px;
+}
+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+p small {
+  font-size: 14px;
+}
+label, input, button, select, textarea {
+    font-size: 18px;
+    line-height: 24px;
+}
+footer {
+  font-size: 13px;
+  line-height: 18px;
+}

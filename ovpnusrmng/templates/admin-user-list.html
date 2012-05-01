@@ -1,0 +1,58 @@
+{% extends "admin.html" %}
+{% block content %}
+    <div class="well">
+        <h1>用户列表</h1>
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>Email</th>
+                    <th>已经消耗流量</th>
+                    <th>套餐</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users.object_list %}
+                <tr{% if user.Banned %} class="alert"{% endif %}>
+                    <td>{{ user.Username }}</td>
+                    <td>{{ user.Email }}</td>
+                    <td>{{ user.Resource|filesizeformat }}</td>
+                    <td>{{ user.Plan|default:"None" }}</td>
+                    <td><a href="users-edit-id-{{ user.id }}" class="btn">编辑</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="btn-group pull-right">
+                    {% if users.has_previous %}
+                        <a class="btn" href="users-page-{{ users.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="btn">
+                        {{ users.number }} of {{ users.paginator.num_pages }}
+                    </span>
+
+                    {% if users.has_next %}
+                        <a class="btn" href="users-page-{{ users.next_page_number }}">next</a>
+                    {% endif %}
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="span8 offset4">
+                <form action="users" method="post">
+                    {% csrf_token %}
+                
+                    {{ userSearchForm.as_p }}
+                    <button type="submit" class="btn">查找用户</button>
+                </form>
+                <a href="users-add" class="btn">添加用户</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
