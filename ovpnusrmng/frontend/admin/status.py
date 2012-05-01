@@ -36,13 +36,26 @@ def status(request):
     now = datetime.datetime.now()
     MonthStart = datetime.date(now.year, now.month, 1)
     TodayStart = datetime.date(now.year, now.month, now.day)
+    TodayBandwidth=0
+    MonthBandwidth=0
+
+    try:
+        TodayBandwidth = Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
+    except TypeError:
+        TodayBandwidth = 0
+    TodayBandwidth=0
+
+    try:
+        MonthBandwidth = Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
+    except TypeError:
+        MonthBandwidth = 0
 
     return render_to_response("admin-status.html",
         {
             'pageName': 'status',
             'records': rs,
             'now': datetime.datetime.now(),
-            'todaybandwidth': Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"],
-            'thismonthbandwidth': Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
+            'todaybandwidth': TodayBandwidth,
+            'thismonthbandwidth': MonthBandwidth,
         },
         context_instance=RequestContext(request))
