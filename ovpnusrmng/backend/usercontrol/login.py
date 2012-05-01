@@ -25,3 +25,12 @@ def try_login(Username, Password):
         return True
     except User.DoesNotExist:
         return False
+
+def try_login_openvpn(Username, Password):
+    try:
+        U=User.objects.get(Username = Username, Password = Password)
+        if U.CurrConnections >= U.Plan.Connection:
+            return False
+        return True
+    except User.DoesNotExist:
+        return False
