@@ -23,7 +23,7 @@ from backend.log.user import connect, disconnect, update
 
 import os, sys, datetime
 
-def ovpn_connect():
+def ovpn_connect(Service):
     ''' creates an entry '''
     env_username = os.environ.get("common_name")
     if not env_username:
@@ -31,9 +31,9 @@ def ovpn_connect():
     env_remote_ip = os.environ.get("trusted_ip")
     env_remote_port = os.environ.get("trusted_port")
     IP = "%s:%s" % (env_remote_ip, env_remote_port)
-    connect(env_username, "VPN", IP)
+    connect(env_username, Service, IP)
 
-def ovpn_disconnect():
+def ovpn_disconnect(Service):
     ''' edits an entry '''
     env_username = os.environ.get("common_name")
     if not env_username:
@@ -43,9 +43,9 @@ def ovpn_disconnect():
     IP = "%s:%s" % (env_remote_ip, env_remote_port)
     env_bytes_recv = os.environ.get("bytes_received")
     env_bytes_sent = os.environ.get("bytes_sent")
-    disconnect(env_username, "VPN", IP, env_bytes_sent, env_bytes_recv)
+    disconnect(env_username, Service, IP, env_bytes_sent, env_bytes_recv)
 
-def ovpn_verify():
+def ovpn_verify(Service):
     ''' verification only '''
     env_username = os.environ.get("common_name")
     if not env_username:

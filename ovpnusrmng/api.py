@@ -21,20 +21,23 @@
 import sys
 
 from frontend.api.openvpn import ovpn_connect, ovpn_disconnect, ovpn_verify
+from backend.openvpn.update import ovpn_update
 
 if len(sys.argv)<2:
     exit(63)
 
-action = sys.argv[1]
+service = sys.argv[1]
+action = sys.argv[2]
 
 action_table = { 
     'connect': ovpn_connect,
     'disconnect': ovpn_disconnect,
     'verify':  ovpn_verify,
+    'update': ovpn_update,
         
     }
 
 if action not in action_table:
     exit(64)
 
-exit(action_table[action]())
+exit(action_table[action](service))
