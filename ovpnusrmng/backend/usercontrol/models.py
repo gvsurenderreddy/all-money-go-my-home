@@ -21,6 +21,8 @@ from django import forms
 from django.db import models
 from django.contrib import admin
 
+import datetime
+
 class User(models.Model):
     Username = models.CharField(max_length = 100, unique = True)
     Password = models.CharField(max_length = 20)
@@ -35,7 +37,11 @@ class User(models.Model):
         return self.Username
         
     def Resource(self):                                 # in bytes
-        return 100
+        ax = 0
+        rs = Records.objects.filter(User = self) # TODO: Only this accounting period (month)
+        for itemx in rs:
+            ax += itemx.Bandwidth()
+        return ax
         
 admin.site.register(User)
         
@@ -53,16 +59,16 @@ admin.site.register(Plan)
 class Record(models.Model):
     User = models.ForeignKey('User')
     Service = models.CharField(max_length = 20)
-    ConnTime = models.DateTimeField()
-    DisconnTime = models.DateTimeField(auto_now_add = True)
+    ConnTime = models.DateTimeField(auto_now_add = True)
+    DisconnTime = models.DateTimeField(null = True, blank = True)
     IP = models.CharField(max_length = 39) 	# IPAddressField doesn't support IPv6 Addresses
-    BandwidthUp = models.BigIntegerField()
-    BandwidthDown = models.BigIntegerField()
+    BandwidthUp = models.BigIntegerField(null = True, blank = True)
+    BandwidthDown = models.BigIntegerField(null = True, blank = True)
     
     def Duration(self):
         if self.DisconnTime:
             return self.DisconnTime - self.ConnTime
-        return ""
+        return datetime.datetime.now() - self.ConnTime
     
     def Bandwidth(self):
         return self.BandwidthUp + self.BandwidthDown

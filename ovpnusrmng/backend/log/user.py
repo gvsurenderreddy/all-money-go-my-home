@@ -17,24 +17,28 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
-from django.template import loader,Context, RequestContext
-
+from backend.usercontrol.models import User, Record, Plan
 import datetime
 
-from backend.usercontrol.models import User, Record
+def connect(Username, Service, RemoteIP):
+    user = User.objects.get(Username = Username)
+    r = Record(User = user, 
+            Service = Service,
+            IP = RemoteIP,
+            )
+    r.save()
 
-from login import isAdmin, illegalAccess
+def disconnect(Username, Service, RemoteIP, BytesTx, BytesRx):
+    user = User.objects.get(Username = Username)
+    r = Record.objects.get(User = user, Service = Service, IP = RemoteIP)
+    r.BandwidthUp = BytesRx
+    r.BandwidthDown = BytesTx
+    r.DisconnTime = datetime.datetime.now()
+    r.save()
 
-def status(request):
-    if not isAdmin(request): return illegalAccess()
-
-    rs = Record.objects.filter(DisconnTime__isnull = True)
-    return render_to_response("admin-status.html",
-        {
-            'pageName': 'status',
-            'records': rs,
-            'now': datetime.datetime.now(),
-        },
-        context_instance=RequestContext(request))
+def update(User, RemoteIP, BytesTx, BytesRx):
+    user = User.objects.get(Username = Username)
+    r = Record.objects.get(User = user, Service = Service, IP = RemoteIP)
+    r.BandwidthUp = BytesRx
+    r.BandwidthDown = BytesTx
+    r.save()

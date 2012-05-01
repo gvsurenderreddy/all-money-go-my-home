@@ -32,15 +32,17 @@
 			    <th>帐号</th>
 			</tr>
 		    </thead>
-		    <tbody>
+            <tbody>
+            {% for record in records %}
 			<tr>
-			    <td>201202231827</td>
-			    <td>3小时26分钟</td>
-			    <td>200MB</td>
-			    <td>1.2.3.4</td>
-			    <td>OpenVPN</td>
-			    <td><a href="userinfo?id=multiple1902">multiple1902</a></td>
-			</tr>
+                <td>{{ record.ConnTime }}</td>
+                <td>{{ record.Duration }}</td>
+                <td>{{ record.Bandwidth }}</td>
+                <td>{{ record.IP }}</td>
+                <td>{{ record.Service }}</td>
+                <td><a href="userinfo?id={{ record.User.Username }}">{{ record.User.Username }}</a></td>
+            </tr>
+            {% endfor %}
 		    </tbody>
 		</table>
     </div>

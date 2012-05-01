@@ -30,9 +30,9 @@ class SearchUserForm(forms.Form):
 
 class UserAddForm(ModelForm):
     class Meta:
-	model = User
-	fields = ('Username', 'Password', 'Email')
-	
+        model = User
+        fields = ('Username', 'Password', 'Email')
+
 class UserForm(ModelForm):
     class Meta:
         model = User
