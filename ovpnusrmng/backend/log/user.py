@@ -25,6 +25,8 @@ def connect(Username, Service, RemoteIP):
     r = Record(User = user, 
             Service = Service,
             IP = RemoteIP,
+            BandwidthUp = 0,
+            BandwidthDown = 0,
             )
     r.save()
 
