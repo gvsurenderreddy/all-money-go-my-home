@@ -42,8 +42,8 @@ def ovpn_update(Service):
             continue
 
         r = Record.objects.get(IP = u[1])
-        r.BandwidthUp = Int(u[3])
-        r.BandwidthDown = Int(u[4])
+        r.BandwidthUp = int(u[3])
+        r.BandwidthDown = int(u[4])
         try:
             r.save()
             print "done with user %s" % user.username
