@@ -6,11 +6,11 @@ import telnetlib
 import settings
 
 def connect(Service):
-    Mgmt = settings.OPENVPN_MANAGEMENT[Service]
-    tn = telnetlib.Telnet(Mgmt[0], Mgmt[1], 3)
+    mgmt = settings.OPENVPN_MANAGEMENT[Service]
+    tn = telnetlib.Telnet(mgmt[0], mgmt[1], 3)
     print "hello there"
     tn.read_until("ENTER PASSWORD:")
-    tn.write(settings.OPENVPN_PASSWORD + "\n") # YAY HARDCODED PASSWORDS
+    tn.write(mgmt[2] + "\n") # YAY HARDCODED PASSWORDS
     print "login sent"
     hurr = tn.read_some()
     print "result there"
