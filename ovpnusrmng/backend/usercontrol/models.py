@@ -23,6 +23,8 @@ from django.contrib import admin
 
 import datetime
 
+from django.db.models import Q, Count, Sum
+
 class User(models.Model):
     Username = models.CharField(max_length = 100, unique = True)
     Password = models.CharField(max_length = 20)
@@ -36,12 +38,11 @@ class User(models.Model):
     def __unicode__(self):
         return self.Username
         
+    @property
     def Resource(self):                                 # in bytes
-        ax = 0
-        rs = Record.objects.filter(User = self) # TODO: Only this accounting period (month)
-        for itemx in rs:
-            ax += itemx.Bandwidth()
-        return ax
+        now = datetime.datetime.now()
+        MonthStart = datetime.date(now.year, now.month, 1)
+        return Record.objects.filter(User = self, ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(User = self, ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
 
     def CurrConnections(self):
         rs = Record.objects.filter(User = self, DisconnTime__isnull = True)

@@ -17,33 +17,12 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django.conf.urls.defaults import patterns, include, url
+# many many thanks to 
+# https://github.com/zakx/openvpn-mgmt-webinterface/blob/master/openvpn_update.py
 
-from login import login, logout
-from status import status
-from users import users_list, users_add, users_edit
-from plans import plans_list, plans_add, plans_edit
-from logs import logs_list
+import mgmtlib
 
-from api import kill
-
-urlpatterns = patterns('',
-    (r'^$', login),
-    (r'^login$', login),
-    
-    (r'^status$', status),
-    
-    (r'^users$', users_list),
-    (r'^users-add$', users_add),
-    (r'^users-page-(\d+)$', users_list),
-    (r'^users-edit-id-(\d+)$', users_edit),
-    
-    (r'^plans$', plans_list),
-    (r'^plans-add$', plans_add),
-    (r'^plans-edit-id-(\d+)', plans_edit),
-    
-    (r'^logs$', logs_list),
-
-    (r'^api/kill/([a-zA-Z0-9]+)/([0-9:\.]+)', kill),
-    #(r'^.*$', logout),
-)
+def kill(IP, Service):
+    tn = mgmtlib.connect(Service)
+    mgmtlib.send(tn, r"kill %s" % IP)
+    mgmtlib.quit(tn)

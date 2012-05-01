@@ -6,15 +6,15 @@
 		<table class="table table-bordered table-striped">
 		    <tr>
 			<td>在线用户</td>
-			<td>22</td>
+            <td>{{ records|length }}</td>
 		    </tr>
 		    <tr>
 			<td>今日流量</td>
-			<td>22.3G</td>
+            <td>{{ todaybandwidth|filesizeformat }}</td>
 		    </tr>
 		    <tr>
 			<td>本月流量</td>
-			<td>474G</td>
+            <td>{{ thismonthbandwidth|filesizeformat }}</td>
 		    </tr>
 		</table>
 	
@@ -30,6 +30,7 @@
 			    <th>客户端IP</th>
 			    <th>连接方式</th>
 			    <th>帐号</th>
+			    <th>操作</th>
 			</tr>
 		    </thead>
             <tbody>
@@ -37,10 +38,11 @@
 			<tr>
                 <td>{{ record.ConnTime }}</td>
                 <td>{{ record.Duration }}</td>
-                <td>{{ record.Bandwidth }}</td>
+                <td>{{ record.Bandwidth|filesizeformat }}</td>
                 <td>{{ record.IP }}</td>
                 <td>{{ record.Service }}</td>
-                <td><a href="userinfo?id={{ record.User.Username }}">{{ record.User.Username }}</a></td>
+                <td><a href="userinfo/{{ record.User.Username }}">{{ record.User.Username }}</a></td>
+                <td><a href="api/kill/{{ record.Service }}/{{ record.IP }}" class="btn btn-danger">踢</a></td>
             </tr>
             {% endfor %}
 		    </tbody>

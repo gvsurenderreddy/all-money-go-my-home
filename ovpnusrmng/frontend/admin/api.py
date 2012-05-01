@@ -17,33 +17,24 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from django.conf.urls.defaults import patterns, include, url
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template import loader,Context, RequestContext
 
-from login import login, logout
-from status import status
-from users import users_list, users_add, users_edit
-from plans import plans_list, plans_add, plans_edit
-from logs import logs_list
+import datetime
 
-from api import kill
+from login import isAdmin, illegalAccess
 
-urlpatterns = patterns('',
-    (r'^$', login),
-    (r'^login$', login),
-    
-    (r'^status$', status),
-    
-    (r'^users$', users_list),
-    (r'^users-add$', users_add),
-    (r'^users-page-(\d+)$', users_list),
-    (r'^users-edit-id-(\d+)$', users_edit),
-    
-    (r'^plans$', plans_list),
-    (r'^plans-add$', plans_add),
-    (r'^plans-edit-id-(\d+)', plans_edit),
-    
-    (r'^logs$', logs_list),
+from backend.openvpn.kill import kill as ovpn_kill
 
-    (r'^api/kill/([a-zA-Z0-9]+)/([0-9:\.]+)', kill),
-    #(r'^.*$', logout),
-)
+from backend.usercontrol.models import Record
+
+def kill(request, Service, IP):
+    if not isAdmin(request): return illegalAccess()
+
+    ovpn_kill(IP, Service)
+    
+    r = Record.objects.filter(IP = IP, DisconnTime__isnull = True)[0]
+    r.DisconnTime = datetime.datetime.now()
+    r.save()
+    return HttpResponseRedirect('/manage/status')
