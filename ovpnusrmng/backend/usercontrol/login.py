@@ -17,11 +17,11 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-from models import User
+from backend.usercontrol.models import User
 
 def try_login(Username, Password):
     try:
-	U=User.objects.get(Username = Username, Password = Password)
-	return True
+        U=User.objects.get(Username = Username, Password = Password)
+        return True
     except User.DoesNotExist:
-	return False
+        return False
