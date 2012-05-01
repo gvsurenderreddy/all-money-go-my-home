@@ -44,15 +44,15 @@ def ovpn_update(Service):
         r = Record.objects.get(IP = u[1])
         r.BandwidthUp = int(u[3])
         r.BandwidthDown = int(u[4])
-        try:
-            r.save()
-            print "done with user %s" % user.username
-        except:
-            print "couldn't save connection"
-            continue
+        #try:
+        r.save()
+        #    print "done with user %s" % user.username
+        #except:
+        #    print "couldn't save connection"
+        #    continue
         
         # check bandwidth limits
-        if user.Resource() > user.Plan.Bandwidth() and user.Plan.Bandwidth() > -1:
+        if user.Resource > user.Plan.Bandwidth and user.Plan.Bandwidth() > -1:
             tn = mgmtlib.connect()
             mgmtlib.send(tn, "kill %s" % u[1])
             mgmtlib.quit(tn)
