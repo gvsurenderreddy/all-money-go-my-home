@@ -43,7 +43,7 @@ class User(models.Model):
             ax += itemx.Bandwidth()
         return ax
 
-=   def CurrConnections(self):
+    def CurrConnections(self):
         rs = Record.objects.filter(User = self, DisconnTime__isnull = True)
         return len(rs)
         
