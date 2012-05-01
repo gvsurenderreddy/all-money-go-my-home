@@ -20,6 +20,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader,Context, RequestContext
+from django.db.models import Q, Count, Sum
 
 import datetime
 
@@ -31,10 +32,17 @@ def status(request):
     if not isAdmin(request): return illegalAccess()
 
     rs = Record.objects.filter(DisconnTime__isnull = True)
+
+    now = datetime.datetime.now()
+    MonthStart = datetime.date(now.year, now.month, 1)
+    TodayStart = datetime.date(now.year, now.month, now.day)
+
     return render_to_response("admin-status.html",
         {
             'pageName': 'status',
             'records': rs,
             'now': datetime.datetime.now(),
+            'todaybandwidth': Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = TodayStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"],
+            'thismonthbandwidth': Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthUp"))["Resource"] + Record.objects.filter(ConnTime__gte = MonthStart).aggregate(Resource=Sum("BandwidthDown"))["Resource"]
         },
         context_instance=RequestContext(request))

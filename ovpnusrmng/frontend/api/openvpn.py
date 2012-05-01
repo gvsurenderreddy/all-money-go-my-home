@@ -29,7 +29,9 @@ def ovpn_connect():
     if not env_username:
         env_username = os.environ.get("username")
     env_remote_ip = os.environ.get("trusted_ip")
-    connect(env_username, "VPN", env_remote_ip)
+    env_remote_port = os.environ.get("trusted_port")
+    IP = "%s:%s" % (env_remote_ip, env_remote_port)
+    connect(env_username, "VPN", IP)
 
 def ovpn_disconnect():
     ''' edits an entry '''
@@ -37,9 +39,11 @@ def ovpn_disconnect():
     if not env_username:
         env_username = os.environ.get("username")
     env_remote_ip = os.environ.get("trusted_ip")
+    env_remote_port = os.environ.get("trusted_port")
+    IP = "%s:%s" % (env_remote_ip, env_remote_port)
     env_bytes_recv = os.environ.get("bytes_received")
     env_bytes_sent = os.environ.get("bytes_sent")
-    disconnect(env_username, "VPN", env_remote_ip, env_bytes_sent, env_bytes_recv)
+    disconnect(env_username, "VPN", IP, env_bytes_sent, env_bytes_recv)
 
 def ovpn_verify():
     ''' verification only '''
