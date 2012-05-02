@@ -29,6 +29,9 @@ if len(sys.argv)<2:
 service = sys.argv[1]
 action = sys.argv[2]
 
+print "Calls API: %s %s" % (service, action)
+
+
 action_table = { 
     'connect': ovpn_connect,
     'disconnect': ovpn_disconnect,

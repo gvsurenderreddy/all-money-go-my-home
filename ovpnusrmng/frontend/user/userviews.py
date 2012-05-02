@@ -23,6 +23,25 @@ from django.template import loader,Context
 
 from base import joinbase
 
-def userstatus(request):
-    c=joinbase({})
+from backend.usercontrol.models import User, Record
+from frontend.site.login import logout
+
+def getuser(fn):
+    def wrapper(request):
+        username = request.session['Username']
+        user = User.objects.get(Username = username)
+        if user is None:
+            return logout(request)
+        return fn(request, user)
+    return wrapper
+
+@getuser
+def userstatus(request, user):
+
+    q = Record.objects.filter(User = user).order_by("-id")[:5]
+
+    c=joinbase({
+        'User': user,
+        'Records': q,
+        })
     return render_to_response("user-status.html",c)
