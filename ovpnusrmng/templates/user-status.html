@@ -8,24 +8,26 @@
 		<table class="table table-bordered table-striped">
 		    <tr>
 			<td class="pagination-centered">帐号</td>
-			<td>multiple1902</td>
+            <td>{{ User.Username }}</td>
 		    </tr>
 		    <tr>
 			<td>套餐</td>
-			<td>无限流量 (每月0元)</td>
+            <td>{{ User.Plan.Title }}</td>
 		    </tr>
 		    <tr>
 			<td>余额</td>
-			<td>10元</td>
+            <td>{{ User.Credit }}元</td>
 		    </tr>
 		    <tr>
 			<td>流量</td>
-			<td>20G/1000G</td>
-		    </tr>
+            <td>{{ User.Resource|filesizeformat }}/{{ User.Plan.Bandwidth|filesizeformat }}</td>
+        </tr>
+        <!--
 		    <tr>
 			<td>过期时间</td>
 			<td>Feb 2, 2012</td>
-		    </tr>
+        </tr>
+        -->
 		</table>
 	    <!--</div>
 	</div>-->
@@ -43,14 +45,16 @@
 			    <th>连接方式</th>
 			</tr>
 		    </thead>
-		    <tbody>
+            <tbody>
+                {% for record in Records %}
 			<tr>
-			    <td>20120223</td>
-			    <td>3小时26分钟</td>
-			    <td>200MB</td>
-			    <td>1.2.3.4</td>
-			    <td>OpenVPN</td>
-			</tr>
+                <td>{{ record.ConnTime }}</td>
+                <td>{{ record.Duration }}</td>
+                <td>{{ record.Bandwidth}}</td>
+                <td>{{ record.IP       }}</td>
+                <td>{{ record.Service  }}</td>
+            </tr>
+                {% endfor %}
 		    </tbody>
 		</table>
 	    <a href="/user/log" class="btn btn-info">查看更多</a>
